@@ -1,4 +1,4 @@
-![Android Event](https://github.com/FernandoAOborges/MAGNIFYING-GLASS-REACT-NATIVE/actions/workflows/main.yml/badge.svg?event=push)
+![Android Event](https://github.com/FernandoAOborges/REACT-NATIVE-PIP-ANDROID/actions/workflows/main.yml/badge.svg?event=push)
 
 # React Native PiP (Picture-in-Picture) for Android
 
