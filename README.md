@@ -13,7 +13,6 @@ https://github.com/FernandoAOborges/REACT-NATIVE-PIP-ANDROID/assets/33990306/5dc
 ## Installation / Instalação
 
 To use this module in your React Native project, follow the steps below:
-<br>
 Para utilizar este módulo em seu projeto React Native, siga os passos abaixo:
 
 1. Include the following settings in your `AndroidManifest.xml` within the `MainActivity` activity tag:
@@ -24,8 +23,71 @@ Para utilizar este módulo em seu projeto React Native, siga os passos abaixo:
     android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|smallestScreenSize|orientation"
     ```
 
-2. Add the files `PipModule.java` and `PipPackage.java` in `java.com` to your project.
-   Adicione os arquivos `PipModule.java` e `PipPackage.java` em `java.com` no seu projeto.
+2. Add the following Java files to your project in the appropriate package (e.g., `com.pipandroid`):
+   Adicione os seguintes arquivos Java ao seu projeto no pacote apropriado (por exemplo, `com.pipandroid`):
+
+    ### PipModule.java
+    ```java
+    package com.pipandroid;
+
+    import android.app.PictureInPictureParams;
+    import android.os.Build;
+    import android.util.Rational;
+    import com.facebook.react.bridge.ReactApplicationContext;
+    import com.facebook.react.bridge.ReactContextBaseJavaModule;
+    import com.facebook.react.bridge.ReactMethod;
+
+    public class PipModule extends ReactContextBaseJavaModule {
+        private Rational aspectRatio;
+        PipModule(ReactApplicationContext context){
+            super(context);
+            aspectRatio = new Rational(3, 4);
+        }
+
+        @Override
+        public String getName(){
+            return "PipModule";
+        }
+
+        @ReactMethod
+        public void EnterPipMode(){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                PictureInPictureParams params = new PictureInPictureParams.Builder()
+                    .setAspectRatio(this.aspectRatio)
+                    .build();
+                getCurrentActivity().enterPictureInPictureMode(params);
+            }
+        }
+    }
+    ```
+
+    ### PipPackage.java
+    ```java
+    package com.pipandroid;
+
+    import com.facebook.react.ReactPackage;
+    import com.facebook.react.bridge.NativeModule;
+    import com.facebook.react.bridge.ReactApplicationContext;
+    import com.facebook.react.uimanager.ViewManager;
+    import java.util.ArrayList;
+    import java.util.Collections;
+    import java.util.List;
+
+    public class PipPackage implements ReactPackage {
+
+        @Override
+        public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+            return Collections.emptyList();
+        }
+
+        @Override
+        public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+            List<NativeModule> modules = new ArrayList<>();
+            modules.add(new PipModule(reactContext));
+            return modules;
+        }
+    }
+    ```
 
 3. In the `MainApplication.java` file of your project, register the module by adding the following line:
    No arquivo `MainApplication.java` do seu projeto, registre o módulo adicionando a seguinte linha:
