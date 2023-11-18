@@ -34,7 +34,10 @@ Para utilizar este módulo em seu projeto React Native, siga os passos abaixo:
     ```
 
 ## Usage / Uso
+   ```java
+     const { PipModule } = NativeModules;
+     PipModule.EnterPipMode();    
 
-[Include detailed instructions on how to use the module in a React Native project.]
-[Inclua instruções detalhadas sobre como usar o módulo em um projeto React Native.]
+
+  
 
